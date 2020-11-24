@@ -1,0 +1,18 @@
+version: "2.1"
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: ggrafana
+    ports:
+      - 3000:3000
+#environment: # you can install pugins here if you don't want to map the directory
+#- GF_INSTALL_PLUGINS=briangann-gauge-panel
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - /prometheus/config/grafana/plugins:/var/lib/plugins  
+      - /prometheus/config/grafana/grafana.ini:/etc/grafana/grafana.ini
+    restart: unless-stopped
+    entrypoint: ["sh", "/run.sh", "--config=/etc/grafana/grafana.ini"]
+volumes: 
+     grafana-storage : {}
+
